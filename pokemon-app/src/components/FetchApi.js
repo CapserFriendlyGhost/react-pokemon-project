@@ -1,6 +1,6 @@
 import React from "react";
 
-const FetchApi = () => {
+const FetchApi = async () => {
   let infoArr = [];
   let urlArr = [];
 
@@ -32,8 +32,6 @@ const FetchApi = () => {
     );
     return;
   };
-
-  fetchPokeInfo(urlArr);
 
   // console.log(infoArr);
   return infoArr;
