@@ -1,28 +1,42 @@
 import React from "react";
 
-const Fetch = () => {
+const FetchApi = () => {
   let infoArr = [];
-  const FetchFullApi = async () => {
+  let urlArr = [];
+
+  const fetchFullApi = async () => {
     const response = await fetch(
       "https://pokeapi.co/api/v2/pokemon/?limit=151"
     );
     const result = await response.json();
-    fetchPokeInfo(result);
+    const { results: pokemon } = result;
+    // console.log(pokemon);
+    pokemon.map((obj) => {
+      return urlArr.push(obj.url);
+    });
+    // console.log(urlArr);
+    fetchPokeInfo(urlArr);
+    return;
+  };
+  // console.log(urlArr);
+  fetchFullApi();
+
+  const fetchPokeInfo = (resultUrl) => {
+    Promise.all(
+      resultUrl.map(async (url) => {
+        const response2 = await fetch(url);
+        const result2 = await response2.json();
+        // console.log(result2);
+        return infoArr.push(result2);
+      })
+    );
     return;
   };
 
-  FetchFullApi();
+  fetchPokeInfo(urlArr);
 
-  const fetchPokeInfo = async (result) => {
-    result.results.map(async (obj) => {
-      const response2 = await fetch(obj.url);
-      const result2 = await response2.json();
-      infoArr.push(result2);
-      return;
-    });
-  };
-
+  // console.log(infoArr);
   return infoArr;
 };
 
-export default Fetch;
+export default FetchApi;
