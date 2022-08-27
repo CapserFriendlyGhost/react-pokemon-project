@@ -15,8 +15,9 @@ const S = {
 
 const Home = () => {
   const { data, status } = useQuery("pokemonData", FetchApi);
-  console.log(data);
-  console.log(useQuery("pokemonData", FetchApi));
+
+  // console.log(data);
+  // console.log(useQuery("pokemonData", FetchApi));
   return (
     <div>
       <Typography>Home</Typography>
