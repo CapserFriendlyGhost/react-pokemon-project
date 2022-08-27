@@ -9,15 +9,10 @@ import {
   Button,
 } from "@mui/material/";
 
-const PokeCard = ({ name }) => {
+const PokeCard = ({ name, img }) => {
   return (
     <Card sx={{ maxWidth: 345, m: 2 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
-        alt={name}
-      />
+      <CardMedia component="img" height="300" image={img} alt={name} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {name}

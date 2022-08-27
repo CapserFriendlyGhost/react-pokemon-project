@@ -16,8 +16,8 @@ const S = {
 const Home = () => {
   const { data, status } = useQuery("pokemonData", FetchApi);
 
-  // console.log(data);
-  // console.log(useQuery("pokemonData", FetchApi));
+  console.log(data);
+  console.log(useQuery("pokemonData", FetchApi));
   return (
     <div>
       <Typography>Home</Typography>
@@ -26,7 +26,13 @@ const Home = () => {
       {status === "success" && (
         <S.StyledCardsWrapper>
           {data?.map((pokemon) => {
-            return <PokeCard key={pokemon.name} name={pokemon.name} />;
+            return (
+              <PokeCard
+                key={pokemon.name}
+                name={pokemon.name}
+                img={pokemon.sprites.front_default}
+              />
+            );
           })}
         </S.StyledCardsWrapper>
       )}
