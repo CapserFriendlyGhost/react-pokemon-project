@@ -14,7 +14,13 @@ const S = {
 };
 
 const Home = () => {
-  const { data, status } = useQuery("pokemonData", FetchApi);
+  const { data, status } = useQuery("pokemonData", FetchApi, {
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    staleTime: Infinity,
+    cacheTime: 20000,
+  });
 
   console.log(data);
   console.log(useQuery("pokemonData", FetchApi));
@@ -31,6 +37,10 @@ const Home = () => {
                 key={pokemon.name}
                 name={pokemon.name}
                 img={pokemon.sprites.front_default}
+                height={pokemon.height}
+                weight={pokemon.weight}
+                exp={pokemon.base_experience}
+                ability={pokemon.abilities[0].ability.name}
               />
             );
           })}
