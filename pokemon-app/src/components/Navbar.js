@@ -14,13 +14,18 @@ import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 const pages = ["Favourites", "Arena", "Log in", "Sign Up"];
 
 const S = {
+  MyAppBar: styled(AppBar)`
+    border-bottom: 2px dashed #ffffef;
+  `,
   MyBox: styled(Box)`
     display: flex;
     justify-content: flex-end;
   `,
   MyButton: styled(Button)`
+    border: 2px dashed transparent;
     &:hover {
       background-color: #aed581;
+      border: 2px dashed white;
     }
   `,
 };
@@ -33,7 +38,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <S.MyAppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <CatchingPokemonIcon
@@ -76,7 +81,7 @@ const Navbar = () => {
           </S.MyBox>
         </Toolbar>
       </Container>
-    </AppBar>
+    </S.MyAppBar>
   );
 };
 export default Navbar;

@@ -14,7 +14,12 @@ const queryClient = new QueryClient();
 
 const theme = createTheme({
   palette: {
-    primary: lightGreen,
+    primary: {
+      main: "#8bc34a",
+    },
+    secondary: {
+      main: "#ffffef",
+    },
   },
   typography: {
     fontFamily: "Silkscreen",

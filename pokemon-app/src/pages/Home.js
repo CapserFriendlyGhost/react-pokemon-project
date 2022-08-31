@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import PokeCard from "../components/PokeCard";
 import FetchApi from "../components/FetchApi";
-import { Typography, CircularProgress } from "@mui/material/";
+import { Typography, CircularProgress, Box } from "@mui/material/";
 import styled from "styled-components";
 
 const S = {
@@ -13,25 +13,34 @@ const S = {
   `,
 };
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const { data, status } = useQuery("pokemonData", FetchApi, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
     staleTime: Infinity,
-    cacheTime: 20000,
+    cacheTime: Infinity,
   });
 
+  console.log(searchValue);
   console.log(data);
   console.log(useQuery("pokemonData", FetchApi));
+
+  const filteredData = data?.filter((pokemon) => {
+    if (searchValue === "") {
+      return pokemon;
+    } else {
+      return pokemon.name.toLowerCase().includes(searchValue);
+    }
+  });
+
   return (
-    <div>
-      <Typography>Home</Typography>
+    <Box margin={5}>
       {status === "loading" && <CircularProgress />}
       {status === "error" && <div> Error </div>}
       {status === "success" && (
         <S.StyledCardsWrapper>
-          {data?.map((pokemon) => {
+          {filteredData?.map((pokemon) => {
             return (
               <PokeCard
                 key={pokemon.name}
@@ -46,7 +55,7 @@ const Home = () => {
           })}
         </S.StyledCardsWrapper>
       )}
-    </div>
+    </Box>
   );
 };
 

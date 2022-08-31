@@ -16,8 +16,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const S = {
   MyCard: styled(Card)`
+    border: 1px solid lightgray;
     margin: 1%;
     background-color: #ffffef;
+    -webkit-box-shadow: 0 2px 15px -6px black;
+    -moz-box-shadow: 0 2px 15px -6px black;
+    box-shadow: 0 2px 15px -6px black;
     &:hover {
       -ms-transform: scale(1.1);
       -webkit-transform: scale(1.1);

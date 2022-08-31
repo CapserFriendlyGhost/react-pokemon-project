@@ -7,10 +7,10 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Edition from "../pages/Edition";
 
-const AppRouter = () => {
+const AppRouter = ({ searchValue }) => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home searchValue={searchValue} />} />
       <Route path="/favourites" element={<Favourites />} />
       <Route path="/arena" element={<Arena />} />
       <Route path="/login" element={<Login />} />
