@@ -5,11 +5,13 @@ import FetchApi from "../components/FetchApi";
 import {
   Typography,
   CircularProgress,
+  LinearProgress,
   Box,
   Pagination,
   Stack,
 } from "@mui/material/";
 import styled from "styled-components";
+import PokemonModal from "../PokemonModal";
 
 const S = {
   StyledCardsWrapper: styled.div`
@@ -23,15 +25,20 @@ const S = {
     display: flex;
     justify-content: center;
   `,
-  StyledStack: styled(Stack)`
-    -webkit-box-shadow: 0 2px 12px -6px black;
-    -moz-box-shadow: 0 2px 12px -6px black;
-    box-shadow: 0 2px 12px -6px black;
+  StyledPagination: styled(Pagination)`
+    .MuiPaginationItem-root {
+      -webkit-box-shadow: 0 2px 12px -6px black;
+      -moz-box-shadow: 0 2px 12px -6px black;
+      box-shadow: 0 2px 12px -6px black;
+    }
   `,
 };
 
 const Home = ({ searchValue }) => {
   const [pageNumber, setPageNumber] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [pokemonName, setPokemonName] = useState("");
+
   const { data, status } = useQuery("pokemonData", FetchApi, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -55,9 +62,13 @@ const Home = ({ searchValue }) => {
     setPageNumber(page);
   };
 
+  const handleOpen = (event) => {
+    setOpen(true);
+  };
+
   return (
     <Box margin={5}>
-      {status === "loading" && <CircularProgress />}
+      {status === "loading" && <LinearProgress />}
       {status === "error" && <div> Error </div>}
       {status === "success" && (
         <S.StyledCardsWrapper>
@@ -73,6 +84,7 @@ const Home = ({ searchValue }) => {
                   weight={pokemon.weight}
                   exp={pokemon.base_experience}
                   ability={pokemon.abilities[0].ability.name}
+                  onClick={handleOpen}
                 />
               );
             })}
@@ -80,7 +92,7 @@ const Home = ({ searchValue }) => {
       )}
       <S.StyledReactPaginateWrapper>
         <Stack spacing={2}>
-          <Pagination
+          <S.StyledPagination
             count={pageCount}
             variant="outlined"
             shape="rounded"
@@ -91,6 +103,7 @@ const Home = ({ searchValue }) => {
           />
         </Stack>
       </S.StyledReactPaginateWrapper>
+      <PokemonModal open={open} setOpen={setOpen} />
     </Box>
   );
 };

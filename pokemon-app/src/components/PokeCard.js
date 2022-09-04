@@ -30,29 +30,31 @@ const S = {
   `,
 };
 
-const PokeCard = ({ name, img, height, weight, exp, ability }) => {
+const PokeCard = ({ name, img, height, weight, exp, ability, onClick }) => {
   return (
-    <S.MyCard>
-      <CardMedia component="img" height="315" image={img} alt={name} />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div" color="primary">
-          {name}
-        </Typography>
-        <Box>
-          <Typography variant="body2" color="text.secondary">
-            Height: {height}
+    <S.MyCard onClick={onClick}>
+      <CardActionArea>
+        <CardMedia component="img" height="315" image={img} alt={name} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div" color="primary">
+            {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Weight: {weight}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Experience: {exp}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Ability: {ability}
-          </Typography>
-        </Box>
-      </CardContent>
+          <Box>
+            <Typography variant="body2" color="text.secondary">
+              Height: {height}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Weight: {weight}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Experience: {exp}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Ability: {ability}
+            </Typography>
+          </Box>
+        </CardContent>
+      </CardActionArea>
     </S.MyCard>
   );
 };
