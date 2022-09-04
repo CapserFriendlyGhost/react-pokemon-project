@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Typography, Modal } from "@mui/material/";
+import { useQuery } from "react-query";
 import { styled } from "@mui/material/styles";
+import fetchPokemon from "./FetchPokemon";
 
 const style = {
   position: "absolute",
@@ -15,6 +17,8 @@ const style = {
 };
 
 const PokemonModal = ({ open, setOpen }) => {
+  const { data, status } = useQuery("pokemon", fetchPokemon);
+
   const handleClose = () => {
     setOpen(false);
   };

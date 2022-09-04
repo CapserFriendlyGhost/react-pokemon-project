@@ -11,7 +11,7 @@ import {
   Stack,
 } from "@mui/material/";
 import styled from "styled-components";
-import PokemonModal from "../PokemonModal";
+import PokemonModal from "../components/PokemonModal";
 
 const S = {
   StyledCardsWrapper: styled.div`
