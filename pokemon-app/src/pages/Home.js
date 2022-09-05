@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 import PokeCard from "../components/PokeCard";
 import FetchApi from "../components/FetchApi";
@@ -37,7 +37,7 @@ const S = {
 const Home = ({ searchValue }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [open, setOpen] = useState(false);
-  const [pokemonName, setPokemonName] = useState("");
+  const [pokemonEndpoint, setPokemonEndpoint] = useState("");
 
   const { data, status } = useQuery("pokemonData", FetchApi, {
     refetchOnMount: false,
@@ -62,10 +62,11 @@ const Home = ({ searchValue }) => {
     setPageNumber(page);
   };
 
-  const handleOpen = (event) => {
-    setOpen(true);
-  };
-
+  // const handleOpen = (poke) => {
+  //   setOpen(true);
+  //   setPokemonEndpoint(poke);
+  // };
+  // console.log(pokemonEndpoint);
   return (
     <Box margin={5}>
       {status === "loading" && <LinearProgress />}
@@ -77,6 +78,7 @@ const Home = ({ searchValue }) => {
             .map((pokemon) => {
               return (
                 <PokeCard
+                  value={pokemon.name}
                   key={pokemon.name}
                   name={pokemon.name}
                   img={pokemon.sprites.front_default}
@@ -84,7 +86,10 @@ const Home = ({ searchValue }) => {
                   weight={pokemon.weight}
                   exp={pokemon.base_experience}
                   ability={pokemon.abilities[0].ability.name}
-                  onClick={handleOpen}
+                  onClick={() => {
+                    setOpen(true);
+                    setPokemonEndpoint(pokemon.name);
+                  }}
                 />
               );
             })}
@@ -103,7 +108,11 @@ const Home = ({ searchValue }) => {
           />
         </Stack>
       </S.StyledReactPaginateWrapper>
-      <PokemonModal open={open} setOpen={setOpen} />
+      <PokemonModal
+        open={open}
+        setOpen={setOpen}
+        pokemonEndpoint={pokemonEndpoint}
+      />
     </Box>
   );
 };

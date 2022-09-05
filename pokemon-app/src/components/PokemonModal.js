@@ -1,8 +1,8 @@
-import React from "react";
-import { Box, Typography, Modal } from "@mui/material/";
-import { useQuery } from "react-query";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Modal, CircularProgress } from "@mui/material/";
+// import { useQuery } from "react-query";
 import { styled } from "@mui/material/styles";
-import fetchPokemon from "./FetchPokemon";
+// import FetchPokemon from "./FetchPokemon";
 
 const style = {
   position: "absolute",
@@ -16,9 +16,21 @@ const style = {
   p: 4,
 };
 
-const PokemonModal = ({ open, setOpen }) => {
-  const { data, status } = useQuery("pokemon", fetchPokemon);
+const PokemonModal = ({ open, setOpen, pokemonEndpoint }) => {
+  const [singlePokemon, setSinglePokemon] = useState("");
 
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${pokemonEndpoint}`
+      );
+      const json = await response.json();
+      setSinglePokemon(json);
+    };
+    fetchPokemon();
+  }, [pokemonEndpoint]);
+
+  console.log(singlePokemon);
   const handleClose = () => {
     setOpen(false);
   };
@@ -37,7 +49,7 @@ const PokemonModal = ({ open, setOpen }) => {
             component="h2"
             color="primary"
           >
-            Text in a modal
+            {singlePokemon.name}
           </Typography>
           <Typography
             id="modal-modal-description"
