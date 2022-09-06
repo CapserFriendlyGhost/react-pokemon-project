@@ -37,7 +37,7 @@ const S = {
 const Home = ({ searchValue }) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [open, setOpen] = useState(false);
-  const [pokemonEndpoint, setPokemonEndpoint] = useState("");
+  const [pokemonEndpoint, setPokemonEndpoint] = useState(null);
 
   const { data, status } = useQuery("pokemonData", FetchApi, {
     refetchOnMount: false,
@@ -58,15 +58,11 @@ const Home = ({ searchValue }) => {
   const pokemonPerPage = 15;
   const pagesVisited = (pageNumber - 1) * pokemonPerPage;
   const pageCount = Math.ceil(filteredData?.length / pokemonPerPage);
+
   const changePage = (event, page) => {
     setPageNumber(page);
   };
 
-  // const handleOpen = (poke) => {
-  //   setOpen(true);
-  //   setPokemonEndpoint(poke);
-  // };
-  // console.log(pokemonEndpoint);
   return (
     <Box margin={5}>
       {status === "loading" && <LinearProgress />}
@@ -108,11 +104,13 @@ const Home = ({ searchValue }) => {
           />
         </Stack>
       </S.StyledReactPaginateWrapper>
-      <PokemonModal
-        open={open}
-        setOpen={setOpen}
-        pokemonEndpoint={pokemonEndpoint}
-      />
+      {open && (
+        <PokemonModal
+          open={open}
+          setOpen={setOpen}
+          pokemonEndpoint={pokemonEndpoint}
+        />
+      )}
     </Box>
   );
 };
