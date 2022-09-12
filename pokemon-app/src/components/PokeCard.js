@@ -30,19 +30,10 @@ const S = {
   `,
 };
 
-const PokeCard = ({
-  name,
-  img,
-  height,
-  weight,
-  exp,
-  ability,
-  onClick,
-  value,
-}) => {
+const PokeCard = ({ name, img, height, weight, exp, ability, onClick }) => {
   return (
     <S.MyCard onClick={onClick}>
-      <CardActionArea value={value}>
+      <CardActionArea>
         <CardMedia component="img" height="315" image={img} alt={name} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div" color="primary">

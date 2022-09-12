@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -20,22 +21,31 @@ const S = {
   MyBox: styled(Box)`
     display: flex;
     justify-content: flex-end;
+    flex-grow: 1;
   `,
   MyButton: styled(Button)`
     border: 2px dashed transparent;
+    display: block;
+    color: white;
+    margin: 1% 0;
     &:hover {
       background-color: #aed581;
       border: 2px dashed white;
     }
   `,
+  MyTypo: styled(Typography)`
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.4rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  `,
 };
 
 const Navbar = () => {
-  const [route, setRoute] = useState("");
-
-  const handleChangePage = (e) => {
-    setRoute(e.target.innerText.toLowerCase().replace(/\s/g, ""));
-  };
+  let nav = useNavigate();
 
   return (
     <S.MyAppBar position="static">
@@ -43,37 +53,30 @@ const Navbar = () => {
         <Toolbar disableGutters>
           <CatchingPokemonIcon
             sx={{
-              display: { xs: "none", md: "flex" },
               mr: 1,
               color: "white",
-              fontFamily: "Silkscreen",
             }}
           />
-          <Typography
+          <S.MyTypo
             variant="h6"
             noWrap
             component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "Silkscreen",
-              fontWeight: 700,
-              letterSpacing: ".4rem",
-              color: "white",
-              textDecoration: "none",
+            onClick={() => {
+              nav("/");
             }}
           >
             Pokedex
-          </Typography>
+          </S.MyTypo>
 
-          <S.MyBox sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+          <S.MyBox>
             {pages.map((page) => (
               <S.MyButton
                 key={page}
-                onClick={handleChangePage}
-                href={`/${route}`}
-                sx={{ my: 2, color: "white", display: "block" }}
+                onClick={(e) => {
+                  nav(
+                    `/${e.target.innerText.toLowerCase().replace(/\s/g, "")}`
+                  );
+                }}
               >
                 {page}
               </S.MyButton>

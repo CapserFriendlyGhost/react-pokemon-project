@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import PokeCard from "../components/PokeCard";
 import FetchApi from "../components/FetchApi";
 import {
@@ -11,7 +12,6 @@ import {
   Stack,
 } from "@mui/material/";
 import styled from "styled-components";
-import PokemonModal from "../components/PokemonModal";
 
 const S = {
   StyledCardsWrapper: styled.div`
@@ -34,11 +34,9 @@ const S = {
   `,
 };
 
-const Home = ({ searchValue }) => {
+const Home = ({ searchValue, setPokemonEndpoint, pokemonEndpoint }) => {
   const [pageNumber, setPageNumber] = useState(1);
-  const [open, setOpen] = useState(false);
-  const [pokemonEndpoint, setPokemonEndpoint] = useState(null);
-
+  let nav = useNavigate();
   const { data, status } = useQuery("pokemonData", FetchApi, {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
@@ -74,7 +72,6 @@ const Home = ({ searchValue }) => {
             .map((pokemon) => {
               return (
                 <PokeCard
-                  value={pokemon.name}
                   key={pokemon.name}
                   name={pokemon.name}
                   img={pokemon.sprites.front_default}
@@ -83,8 +80,8 @@ const Home = ({ searchValue }) => {
                   exp={pokemon.base_experience}
                   ability={pokemon.abilities[0].ability.name}
                   onClick={() => {
-                    setOpen(true);
                     setPokemonEndpoint(pokemon.name);
+                    nav(`/${pokemon.name}`);
                   }}
                 />
               );
@@ -104,13 +101,6 @@ const Home = ({ searchValue }) => {
           />
         </Stack>
       </S.StyledReactPaginateWrapper>
-      {open && (
-        <PokemonModal
-          open={open}
-          setOpen={setOpen}
-          pokemonEndpoint={pokemonEndpoint}
-        />
-      )}
     </Box>
   );
 };
