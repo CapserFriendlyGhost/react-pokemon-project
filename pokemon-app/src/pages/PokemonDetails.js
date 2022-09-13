@@ -53,7 +53,7 @@ const S = {
 const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
   const [singlePokemon, setSinglePokemon] = useState(null);
   const [pokemonImage, setPokemonImage] = useState(true);
-  const [isFav, setIsFav] = useState(false);
+  const [isFav, setIsFav] = useState(null);
   let nav = useNavigate();
 
   useEffect(() => {
@@ -65,23 +65,27 @@ const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
       setSinglePokemon(json);
     };
     fetchPokemon(pokemonEndpoint);
-    // const includesFav = favourites.map((poke) => {
-    //   return poke.name.includes(pokemonEndpoint);
-    // });
-    // console.log(includesFav);
-    // setIsFav(includesFav);
-  }, [pokemonEndpoint]);
+    const includesFav = favourites.some((poke) => {
+      return poke.name.includes(pokemonEndpoint);
+    });
+
+    setIsFav(includesFav);
+  }, [pokemonEndpoint, favourites]);
 
   const addToFav = () => {
     const favSome = favourites?.some((pokemon) => {
       return pokemon.name === singlePokemon.name;
     });
     const favArr = [...favourites, singlePokemon];
+    const favFilter = favourites?.filter((pokemon) => {
+      return pokemon.name !== singlePokemon.name;
+    });
     if (favSome === false) {
       setIsFav(true);
       setFavourites(favArr);
     } else {
-      alert("already added to favourites");
+      setIsFav(false);
+      setFavourites(favFilter);
     }
   };
 
