@@ -12,7 +12,8 @@ import {
 import { styled } from "@mui/material/styles";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import Favorite from "@mui/icons-material/Favorite";
-
+import StadiumOutlinedIcon from "@mui/icons-material/StadiumOutlined";
+import StadiumIcon from "@mui/icons-material/Stadium";
 const S = {
   MyTypo: styled(Typography)`
     display: flex;
@@ -26,6 +27,9 @@ const S = {
     display: flex;
     flex-direction: row;
     align-items: center;
+    & > button {
+      margin-left: 1.5%;
+    }
   `,
   MyBoxContentWrapper: styled(Box)`
     width: 64%;
@@ -50,10 +54,17 @@ const S = {
   `,
 };
 
-const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
+const PokemonDetails = ({
+  pokemonEndpoint,
+  setFavourites,
+  favourites,
+  setArena,
+  arena,
+}) => {
   const [singlePokemon, setSinglePokemon] = useState(null);
   const [pokemonImage, setPokemonImage] = useState(true);
   const [isFav, setIsFav] = useState(null);
+  const [isArena, setIsArena] = useState(null);
   let nav = useNavigate();
 
   useEffect(() => {
@@ -70,7 +81,13 @@ const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
     });
 
     setIsFav(includesFav);
-  }, [pokemonEndpoint, favourites]);
+
+    const includesArena = arena.some((poke) => {
+      return poke.name.includes(pokemonEndpoint);
+    });
+
+    setIsArena(includesArena);
+  }, [pokemonEndpoint, favourites, arena]);
 
   const addToFav = () => {
     const favSome = favourites?.some((pokemon) => {
@@ -86,6 +103,34 @@ const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
     } else {
       setIsFav(false);
       setFavourites(favFilter);
+    }
+  };
+  const addToArena = () => {
+    const arenaSome = arena?.some((pokemon) => {
+      return pokemon.name === singlePokemon.name;
+    });
+    const arenaArr = [...arena, singlePokemon];
+    const arenaFilter = arena?.filter((pokemon) => {
+      return pokemon.name !== singlePokemon.name;
+    });
+
+    if (arena.length < 2) {
+      if (arenaSome === false) {
+        setIsArena(true);
+        setArena(arenaArr);
+      } else {
+        setIsArena(false);
+        setArena(arenaFilter);
+      }
+    } else if (arena.length === 2) {
+      if (arenaSome === false) {
+        alert("arena is full");
+      } else {
+        setIsArena(false);
+        setArena(arenaFilter);
+      }
+    } else {
+      alert("arena is full");
     }
   };
 
@@ -109,7 +154,6 @@ const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
       <CardContent>
         <S.MyBoxNameFav>
           <Typography
-            gutterBottom
             variant="h5"
             component="div"
             color="primary"
@@ -122,6 +166,13 @@ const PokemonDetails = ({ pokemonEndpoint, setFavourites, favourites }) => {
               <Favorite color="primary" />
             ) : (
               <FavoriteBorderIcon color="text.secondary" />
+            )}
+          </IconButton>
+          <IconButton onClick={addToArena}>
+            {isArena ? (
+              <StadiumIcon sx={{ mb: 0.3 }} color="primary" />
+            ) : (
+              <StadiumOutlinedIcon sx={{ mb: 0.3 }} />
             )}
           </IconButton>
         </S.MyBoxNameFav>

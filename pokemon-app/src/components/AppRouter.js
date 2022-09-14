@@ -11,7 +11,9 @@ import PokemonDetails from "../pages/PokemonDetails";
 const AppRouter = ({ searchValue }) => {
   const [pokemonEndpoint, setPokemonEndpoint] = useState(null);
   const [favourites, setFavourites] = useState([]);
+  const [arena, setArena] = useState([]);
   console.log(favourites);
+  console.log(arena);
   return (
     <Routes>
       <Route
@@ -34,7 +36,10 @@ const AppRouter = ({ searchValue }) => {
           />
         }
       />
-      <Route path="/arena" element={<Arena />} />
+      <Route
+        path="/arena"
+        element={<Arena setArena={setArena} arena={arena} />}
+      />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/edition" element={<Edition />} />
@@ -45,6 +50,8 @@ const AppRouter = ({ searchValue }) => {
             pokemonEndpoint={pokemonEndpoint}
             setFavourites={setFavourites}
             favourites={favourites}
+            setArena={setArena}
+            arena={arena}
           />
         }
       />
