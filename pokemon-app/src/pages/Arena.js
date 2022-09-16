@@ -31,6 +31,7 @@ const S = {
   `,
   CardPlaceholder: styled(Box)(({ theme }) => ({
     width: "18%",
+    height: "30%",
     display: "flex",
     justifyContent: "center",
     position: "relative",
@@ -44,33 +45,75 @@ const S = {
       backgroundColor: alpha(theme.palette.secondary.dark, 0.3),
     },
   })),
+  MyTypo: styled(Typography)`
+    height: 521.09px;
+    margin: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    & > div {
+      padding: 27%;
+    }
+  `,
 };
 
 const Arena = ({ arena, setArena }) => {
+  const [firstPlace, setFirstPlace] = useState(null);
+  const [secondPlace, setSecondPlace] = useState(null);
+
+  useEffect(() => {
+    if (arena.length === 0) {
+      setFirstPlace(false);
+      setSecondPlace(false);
+    } else if (arena.length === 1) {
+      setFirstPlace(true);
+      setSecondPlace(false);
+    } else {
+      setFirstPlace(true);
+      setSecondPlace(true);
+    }
+  }, [arena]);
   console.log(arena);
+
+  // POKECARD MUSI MIEC TEN CANCEL DO CARTY
+
   return (
     <S.MyContainer>
       <S.ArenaWrapperBox>
         <S.CardPlaceholder>
-          <PokeCard
-            name={arena[0]?.name}
-            img={arena[0]?.sprites.front_default}
-            height={arena[0]?.height}
-            weight={arena[0]?.weight}
-            exp={arena[0]?.base_experience}
-            ability={arena[0]?.abilities[0].ability.name}
-          />
+          {firstPlace ? (
+            <PokeCard
+              name={arena[0]?.name}
+              img={arena[0]?.sprites.front_default}
+              height={arena[0]?.height}
+              weight={arena[0]?.weight}
+              exp={arena[0]?.base_experience}
+              ability={arena[0]?.abilities[0].ability.name}
+            />
+          ) : (
+            <S.MyTypo component="div" color="text.secondary">
+              <div>Choose a pokemon to Fight</div>
+            </S.MyTypo>
+          )}
         </S.CardPlaceholder>
         <S.MyButton>Fight!</S.MyButton>
         <S.CardPlaceholder>
-          <PokeCard
-            name={arena[1]?.name}
-            img={arena[1]?.sprites.front_default}
-            height={arena[1]?.height}
-            weight={arena[1]?.weight}
-            exp={arena[1]?.base_experience}
-            ability={arena[1]?.abilities[1].ability.name}
-          />
+          {secondPlace ? (
+            <PokeCard
+              name={arena[1]?.name}
+              img={arena[1]?.sprites.front_default}
+              height={arena[1]?.height}
+              weight={arena[1]?.weight}
+              exp={arena[1]?.base_experience}
+              ability={arena[1]?.abilities[0].ability.name}
+            />
+          ) : (
+            <S.MyTypo component="div" color="text.secondary">
+              <div>Choose a pokemon to fight...</div>
+            </S.MyTypo>
+          )}
         </S.CardPlaceholder>
       </S.ArenaWrapperBox>
     </S.MyContainer>
