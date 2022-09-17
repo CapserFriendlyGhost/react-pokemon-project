@@ -34,6 +34,7 @@ const S = {
     height: "30%",
     display: "flex",
     justifyContent: "center",
+    flexDirection: "column",
     position: "relative",
     border: "1px solid lightgray",
     borderRadius: theme.shape.borderRadius,
@@ -57,58 +58,94 @@ const S = {
       padding: 27%;
     }
   `,
+  CancelButton: styled(IconButton)`
+    position: absolute;
+    display: flex;
+    justify-content: end;
+    margin-bottom: 180%;
+    margin-left: 100%;
+  `,
 };
 
 const Arena = ({ arena, setArena }) => {
   const [firstPlace, setFirstPlace] = useState(null);
   const [secondPlace, setSecondPlace] = useState(null);
-
+  const [fightButtonOff, setFightButtonOff] = useState(null);
   useEffect(() => {
     if (arena.length === 0) {
       setFirstPlace(false);
       setSecondPlace(false);
+      setFightButtonOff(true);
     } else if (arena.length === 1) {
       setFirstPlace(true);
       setSecondPlace(false);
+      setFightButtonOff(true);
     } else {
       setFirstPlace(true);
       setSecondPlace(true);
+      setFightButtonOff(false);
     }
   }, [arena]);
   console.log(arena);
-
-  // POKECARD MUSI MIEC TEN CANCEL DO CARTY
+  const firstPokmon = arena[0]?.name;
+  const secondPokemon = arena[1]?.name;
+  console.log(firstPokmon);
+  console.log(secondPokemon);
 
   return (
     <S.MyContainer>
       <S.ArenaWrapperBox>
         <S.CardPlaceholder>
           {firstPlace ? (
-            <PokeCard
-              name={arena[0]?.name}
-              img={arena[0]?.sprites.front_default}
-              height={arena[0]?.height}
-              weight={arena[0]?.weight}
-              exp={arena[0]?.base_experience}
-              ability={arena[0]?.abilities[0].ability.name}
-            />
+            <>
+              <S.CancelButton
+                onClick={() => {
+                  const arenaFilter = arena?.filter((pokemon) => {
+                    return pokemon.name !== firstPokmon;
+                  });
+                  setArena(arenaFilter);
+                }}
+              >
+                <ClearIcon fontSize="small" />
+              </S.CancelButton>
+              <PokeCard
+                name={arena[0]?.name}
+                img={arena[0]?.sprites.front_default}
+                height={arena[0]?.height}
+                weight={arena[0]?.weight}
+                exp={arena[0]?.base_experience}
+                ability={arena[0]?.abilities[0].ability.name}
+              />
+            </>
           ) : (
             <S.MyTypo component="div" color="text.secondary">
-              <div>Choose a pokemon to Fight</div>
+              <div>Choose a pokemon to Fight...</div>
             </S.MyTypo>
           )}
         </S.CardPlaceholder>
-        <S.MyButton>Fight!</S.MyButton>
+        <S.MyButton disabled={fightButtonOff}>Fight!</S.MyButton>
         <S.CardPlaceholder>
           {secondPlace ? (
-            <PokeCard
-              name={arena[1]?.name}
-              img={arena[1]?.sprites.front_default}
-              height={arena[1]?.height}
-              weight={arena[1]?.weight}
-              exp={arena[1]?.base_experience}
-              ability={arena[1]?.abilities[0].ability.name}
-            />
+            <>
+              <S.CancelButton
+                onClick={() => {
+                  const arenaFilter = arena?.filter((pokemon) => {
+                    return pokemon.name !== secondPokemon;
+                  });
+                  setArena(arenaFilter);
+                }}
+              >
+                <ClearIcon fontSize="small" />
+              </S.CancelButton>
+              <PokeCard
+                name={arena[1]?.name}
+                img={arena[1]?.sprites.front_default}
+                height={arena[1]?.height}
+                weight={arena[1]?.weight}
+                exp={arena[1]?.base_experience}
+                ability={arena[1]?.abilities[0].ability.name}
+              />
+            </>
           ) : (
             <S.MyTypo component="div" color="text.secondary">
               <div>Choose a pokemon to fight...</div>
@@ -121,7 +158,3 @@ const Arena = ({ arena, setArena }) => {
 };
 
 export default Arena;
-
-// <IconButton>
-// <ClearIcon />
-// </IconButton>
