@@ -9,15 +9,17 @@ import {
   Box,
   IconButton,
 } from "@mui/material/";
+import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import PokeCard from "../components/PokeCard";
 import ClearIcon from "@mui/icons-material/Clear";
+import WinnerDialog from "../components/WinnerDialog";
 
 const S = {
   MyContainer: styled(Box)`
     height: 100%;
   `,
-  MyButton: styled(Button)`
+  FightButton: styled(Button)`
     height: 100%;
     font-size: xx-large;
   `,
@@ -67,10 +69,16 @@ const S = {
   `,
 };
 
-const Arena = ({ arena, setArena }) => {
+const Arena = ({ arena, setArena, setPokemonEndpoint }) => {
   const [firstPlace, setFirstPlace] = useState(null);
   const [secondPlace, setSecondPlace] = useState(null);
   const [fightButtonOff, setFightButtonOff] = useState(null);
+  const [firstPlaceLose, setFirstPlaceLose] = useState(1);
+  const [secondPlaceLose, setSecondPlaceLose] = useState(1);
+  const [openWinnerDialog, setWinnerDialog] = useState(false);
+  const [whoWon, setWhoWon] = useState(null);
+
+  let nav = useNavigate();
   useEffect(() => {
     if (arena.length === 0) {
       setFirstPlace(false);
@@ -92,10 +100,35 @@ const Arena = ({ arena, setArena }) => {
   console.log(firstPokmon);
   console.log(secondPokemon);
 
+  const battle = () => {
+    const firstPokeStats =
+      arena[0]?.stats[1].base_stat * arena[0]?.stats[3].base_stat +
+      arena[0]?.stats[2].base_stat * arena[0]?.stats[4].base_stat +
+      arena[0]?.stats[0].base_stat * arena[0]?.base_experience;
+    const secondPokeStats =
+      arena[1]?.stats[1].base_stat * arena[0]?.stats[3].base_stat +
+      arena[1]?.stats[2].base_stat * arena[0]?.stats[4].base_stat +
+      arena[1]?.stats[0].base_stat * arena[0]?.base_experience;
+
+    if (firstPokeStats > secondPokeStats) {
+      setSecondPlaceLose(0.2);
+      setWhoWon(true);
+      setWinnerDialog(true);
+      setFightButtonOff(true);
+    } else if (firstPokeStats < secondPokeStats) {
+      setFirstPlaceLose(0.2);
+      setWhoWon(false);
+      setWinnerDialog(true);
+      setFightButtonOff(true);
+    } else {
+      alert("draw");
+    }
+  };
+
   return (
     <S.MyContainer>
       <S.ArenaWrapperBox>
-        <S.CardPlaceholder>
+        <S.CardPlaceholder sx={{ opacity: firstPlaceLose }}>
           {firstPlace ? (
             <>
               <S.CancelButton
@@ -115,6 +148,10 @@ const Arena = ({ arena, setArena }) => {
                 weight={arena[0]?.weight}
                 exp={arena[0]?.base_experience}
                 ability={arena[0]?.abilities[0].ability.name}
+                onClick={() => {
+                  setPokemonEndpoint(arena[0]?.name);
+                  nav(`/${arena[0]?.name}`);
+                }}
               />
             </>
           ) : (
@@ -123,8 +160,10 @@ const Arena = ({ arena, setArena }) => {
             </S.MyTypo>
           )}
         </S.CardPlaceholder>
-        <S.MyButton disabled={fightButtonOff}>Fight!</S.MyButton>
-        <S.CardPlaceholder>
+        <S.FightButton disabled={fightButtonOff} onClick={battle}>
+          Fight!
+        </S.FightButton>
+        <S.CardPlaceholder sx={{ opacity: secondPlaceLose }}>
           {secondPlace ? (
             <>
               <S.CancelButton
@@ -144,6 +183,10 @@ const Arena = ({ arena, setArena }) => {
                 weight={arena[1]?.weight}
                 exp={arena[1]?.base_experience}
                 ability={arena[1]?.abilities[0].ability.name}
+                onClick={() => {
+                  setPokemonEndpoint(arena[1]?.name);
+                  nav(`/${arena[1]?.name}`);
+                }}
               />
             </>
           ) : (
@@ -153,6 +196,13 @@ const Arena = ({ arena, setArena }) => {
           )}
         </S.CardPlaceholder>
       </S.ArenaWrapperBox>
+      <WinnerDialog
+        open={openWinnerDialog}
+        whoWon={whoWon}
+        setWinnerDialog={setWinnerDialog}
+        arena={arena}
+        setArena={setArena}
+      />
     </S.MyContainer>
   );
 };

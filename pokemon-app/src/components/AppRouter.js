@@ -38,7 +38,13 @@ const AppRouter = ({ searchValue }) => {
       />
       <Route
         path="/arena"
-        element={<Arena setArena={setArena} arena={arena} />}
+        element={
+          <Arena
+            setArena={setArena}
+            arena={arena}
+            setPokemonEndpoint={setPokemonEndpoint}
+          />
+        }
       />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
