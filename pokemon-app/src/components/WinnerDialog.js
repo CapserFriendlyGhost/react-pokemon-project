@@ -12,9 +12,8 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const S = {
-  StyledButtonsWrapper: styled(DialogActions)`
-    display: flex;
-    justify-content: space-between;
+  StyledButton: styled(Button)`
+    margin-right: 4%;
   `,
   StyledTypo: styled(Typography)`
     display: flex;
@@ -31,7 +30,7 @@ const WinnerDialog = ({ open, whoWon, setWinnerDialog, arena, setArena }) => {
         <S.StyledTypo component={"div"} fontSize={60}>
           {whoWon ? `${arena[0]?.name} WON!` : `${arena[1]?.name} WON!`}
         </S.StyledTypo>
-        <S.StyledButtonsWrapper>
+        <DialogActions>
           <Button
             onClick={() => {
               setArena([]);
@@ -48,7 +47,7 @@ const WinnerDialog = ({ open, whoWon, setWinnerDialog, arena, setArena }) => {
           >
             Back to arena
           </Button>
-        </S.StyledButtonsWrapper>
+        </DialogActions>
       </Dialog>
     </div>
   );
