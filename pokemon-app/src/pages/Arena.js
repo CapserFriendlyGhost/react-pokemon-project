@@ -137,6 +137,7 @@ const Arena = ({ arena, setArena, setPokemonEndpoint }) => {
                     return pokemon.name !== firstPokmon;
                   });
                   setArena(arenaFilter);
+                  setFirstPlaceLose(1);
                 }}
               >
                 <ClearIcon fontSize="small" />

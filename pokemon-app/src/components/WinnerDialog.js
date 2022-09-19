@@ -19,6 +19,13 @@ const S = {
     display: flex;
     justify-content: center;
   `,
+  StyledButtonsWrapper: styled(DialogActions)`
+    margin: 0 60px;
+    justify-content: center;
+    & > button {
+      padding: 0 50px;
+    }
+  `,
 };
 
 const WinnerDialog = ({ open, whoWon, setWinnerDialog, arena, setArena }) => {
@@ -27,10 +34,10 @@ const WinnerDialog = ({ open, whoWon, setWinnerDialog, arena, setArena }) => {
   return (
     <div>
       <Dialog open={open}>
-        <S.StyledTypo component={"div"} fontSize={60}>
+        <S.StyledTypo component={"div"} fontSize={55}>
           {whoWon ? `${arena[0]?.name} WON!` : `${arena[1]?.name} WON!`}
         </S.StyledTypo>
-        <DialogActions>
+        <S.StyledButtonsWrapper>
           <Button
             onClick={() => {
               setArena([]);
@@ -47,7 +54,7 @@ const WinnerDialog = ({ open, whoWon, setWinnerDialog, arena, setArena }) => {
           >
             Back to arena
           </Button>
-        </DialogActions>
+        </S.StyledButtonsWrapper>
       </Dialog>
     </div>
   );
