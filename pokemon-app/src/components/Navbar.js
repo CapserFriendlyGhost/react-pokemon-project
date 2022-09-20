@@ -15,22 +15,20 @@ import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 const pages = ["Favourites", "Arena", "Log in", "Sign Up"];
 
 const S = {
-  MyAppBar: styled(AppBar)`
-    border-bottom: 2px dashed #ffffef;
-  `,
+  MyAppBar: styled(AppBar)``,
   MyBox: styled(Box)`
     display: flex;
     justify-content: flex-end;
     flex-grow: 1;
   `,
   MyButton: styled(Button)`
-    border: 2px dashed transparent;
+    border: 1px solid transparent;
     display: block;
     color: white;
     margin: 1% 0;
     &:hover {
       background-color: #aed581;
-      border: 2px dashed white;
+      border: 1px solid white;
     }
   `,
   MyTypo: styled(Typography)`

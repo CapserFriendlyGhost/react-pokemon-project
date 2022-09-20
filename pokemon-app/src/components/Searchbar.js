@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const S = {
   StyledAppBar: styled(AppBar)`
-    border-top: 2px dashed #8bc34a;
+    border-top: 1px solid #8bc34a;
     -webkit-box-shadow: 0 2px 12px -6px black;
     -moz-box-shadow: 0 2px 12px -6px black;
     box-shadow: 0 2px 12px -6px black;
@@ -21,7 +21,7 @@ const S = {
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  border: "2px dashed lightgray",
+  border: "1px solid lightgray",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.secondary.dark, 0.15),
   "&:hover": {
