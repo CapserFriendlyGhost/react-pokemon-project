@@ -1,5 +1,5 @@
 import React from "react";
-import { useField } from "formik";
+import { ErrorMessage, useField } from "formik";
 import { TextField } from "@mui/material/";
 
 const FormTextField = ({ label, type, ...props }) => {
@@ -15,6 +15,7 @@ const FormTextField = ({ label, type, ...props }) => {
         {...field}
         {...props}
       />
+      <ErrorMessage name={field.name} />
     </>
   );
 };

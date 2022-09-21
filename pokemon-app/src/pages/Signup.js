@@ -1,8 +1,9 @@
 import React from "react";
 import { Typography, Box, Button } from "@mui/material/";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import FormTextField from "../components/FormTextField";
 import styled from "styled-components";
+import * as Yup from "yup";
 
 const S = {
   StyledFormWrapper: styled.div`
@@ -16,14 +17,36 @@ const S = {
     display: flex;
     flex-direction: column;
     width: 100%;
-
     & > div {
-      margin-bottom: 30px;
+      margin-top: 30px;
     }
+    & text {
+      color: red;
+    }
+  `,
+  StyledButton: styled(Button)`
+    margin-top: 30px;
   `,
 };
 
 const Signup = () => {
+  const validate = Yup.object({
+    name: Yup.string().required("Name is requried"),
+    email: Yup.string().email("Email is invalid").required("Email is requried"),
+    password: Yup.string()
+      .min(8, "Password must be at least 6 characters")
+      .matches(
+        /[a-zA-Z]+[^a-zA-Z\s]+/,
+        "At least 1 number or special char (@,!,#, etc)."
+      )
+      .matches(/[a-z]/, "At least one lowercase character")
+      .matches(/[A-Z]/, "At least one uppercase character")
+      .required("Password is requried"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Password must match")
+      .required("Confirm password is requried"),
+  });
+
   return (
     <Formik
       initialValues={{
@@ -32,11 +55,12 @@ const Signup = () => {
         password: "",
         confirmPassword: "",
       }}
+      validationSchema={validate}
     >
       {(formik) => (
         <S.StyledFormWrapper>
           {console.log(formik.values)}
-          <Typography component={"div"} fontSize={55} sx={{ mb: 5 }}>
+          <Typography component={"div"} fontSize={55} sx={{ mb: 3 }}>
             Sign up
           </Typography>
           <Box>
@@ -49,7 +73,9 @@ const Signup = () => {
                 name="confirmPassword"
                 type="password"
               />
-              <Button>Create an account</Button>
+              <Button type="submit" sx={{ mt: 4 }}>
+                Create an account
+              </Button>
             </S.TextInputsWrapper>
           </Box>
         </S.StyledFormWrapper>
