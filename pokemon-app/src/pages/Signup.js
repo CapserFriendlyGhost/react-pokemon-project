@@ -20,9 +20,6 @@ const S = {
     & > div {
       margin-top: 30px;
     }
-    & text {
-      color: red;
-    }
   `,
   StyledButton: styled(Button)`
     margin-top: 30px;
@@ -34,13 +31,10 @@ const Signup = () => {
     name: Yup.string().required("Name is requried"),
     email: Yup.string().email("Email is invalid").required("Email is requried"),
     password: Yup.string()
-      .min(8, "Password must be at least 6 characters")
-      .matches(
-        /[a-zA-Z]+[^a-zA-Z\s]+/,
-        "At least 1 number or special char (@,!,#, etc)."
-      )
-      .matches(/[a-z]/, "At least one lowercase character")
+      .min(8, "Password must be at least 8 characters")
       .matches(/[A-Z]/, "At least one uppercase character")
+      .matches(/(\d)/, "At least one number")
+      .matches(/(\W)/, "At least one special character")
       .required("Password is requried"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Password must match")

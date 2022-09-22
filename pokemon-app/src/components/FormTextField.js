@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
-import { TextField } from "@mui/material/";
+import { TextField, Typography } from "@mui/material/";
 
 const FormTextField = ({ label, type, ...props }) => {
   const [field, meta] = useField(props);
@@ -15,7 +15,9 @@ const FormTextField = ({ label, type, ...props }) => {
         {...field}
         {...props}
       />
-      <ErrorMessage name={field.name} />
+      <Typography fontSize={12} sx={{ color: "red" }}>
+        <ErrorMessage name={field.name} />
+      </Typography>
     </>
   );
 };
