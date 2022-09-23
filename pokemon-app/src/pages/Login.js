@@ -35,7 +35,7 @@ const Login = () => {
         <S.StyledFormWrapper>
           {console.log(formik.values)}
           <Typography component={"div"} fontSize={55} sx={{ mb: 3 }}>
-            Login
+            Log in
           </Typography>
           <Box>
             <S.TextInputsWrapper component="form" noValidate autoComplete="off">

@@ -12,7 +12,7 @@ import {
 import { styled } from "@mui/material/styles";
 import CatchingPokemonIcon from "@mui/icons-material/CatchingPokemon";
 
-const pages = ["Favourites", "Arena", "Log in", "Sign Up"];
+const pages = ["Favourites", "Arena", "Sign Up", "Log in"];
 
 const S = {
   MyAppBar: styled(AppBar)``,
