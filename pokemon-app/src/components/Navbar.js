@@ -44,7 +44,6 @@ const S = {
 
 const Navbar = () => {
   let nav = useNavigate();
-  const [isArena, setIsArena] = useState(null);
 
   return (
     <S.MyAppBar position="static">

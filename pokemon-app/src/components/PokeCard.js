@@ -1,18 +1,13 @@
 import React from "react";
-
 import {
   Typography,
   Card,
-  CardActions,
   CardContent,
   CardMedia,
   CardActionArea,
-  Button,
   Box,
-  IconButton,
 } from "@mui/material/";
 import { styled } from "@mui/material/styles";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const S = {
   MyCard: styled(Card)`

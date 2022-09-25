@@ -1,14 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Typography,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  Container,
-  Button,
-  Box,
-  IconButton,
-} from "@mui/material/";
+import { Typography, Button, Box, IconButton } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
 import PokeCard from "../components/PokeCard";
@@ -94,11 +85,9 @@ const Arena = ({ arena, setArena, setPokemonEndpoint }) => {
       setFightButtonOff(false);
     }
   }, [arena]);
-  console.log(arena);
+
   const firstPokmon = arena[0]?.name;
   const secondPokemon = arena[1]?.name;
-  console.log(firstPokmon);
-  console.log(secondPokemon);
 
   const battle = () => {
     const firstPokeStats =

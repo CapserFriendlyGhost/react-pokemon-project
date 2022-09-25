@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Typography,
-} from "@mui/material/";
+import { Button, Dialog, DialogActions, Typography } from "@mui/material/";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 

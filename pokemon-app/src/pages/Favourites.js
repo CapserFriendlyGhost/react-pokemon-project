@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import PokeCard from "../components/PokeCard";
-import {
-  Typography,
-  CircularProgress,
-  LinearProgress,
-  Box,
-  Pagination,
-  Stack,
-} from "@mui/material/";
+import { Typography, Box, Pagination, Stack } from "@mui/material/";
 import styled from "styled-components";
 
 const S = {

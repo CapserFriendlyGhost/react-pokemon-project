@@ -1,7 +1,7 @@
 import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 
-import { AppBar, Box, Toolbar, InputBase, TextField } from "@mui/material/";
+import { AppBar, Box, Toolbar, InputBase } from "@mui/material/";
 import SearchIcon from "@mui/icons-material/Search";
 
 const S = {

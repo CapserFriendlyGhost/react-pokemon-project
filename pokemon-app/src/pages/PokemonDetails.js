@@ -124,13 +124,13 @@ const PokemonDetails = ({
       }
     } else if (arena.length === 2) {
       if (arenaSome === false) {
-        alert("arena is full");
+        alert("Arena is full");
       } else {
         setIsArena(false);
         setArena(arenaFilter);
       }
     } else {
-      alert("arena is full");
+      alert("Arena is full");
     }
   };
 

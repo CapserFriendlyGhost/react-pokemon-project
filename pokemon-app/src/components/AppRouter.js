@@ -12,8 +12,7 @@ const AppRouter = ({ searchValue }) => {
   const [pokemonEndpoint, setPokemonEndpoint] = useState(null);
   const [favourites, setFavourites] = useState([]);
   const [arena, setArena] = useState([]);
-  console.log(favourites);
-  console.log(arena);
+
   return (
     <Routes>
       <Route
